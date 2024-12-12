@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import CancelReserve from "./CancelReserve";
+import { format } from "@formkit/tempo";
 
 function ClassCard(props: { class: Class; noButton: boolean | null }) {
   const { class: cls, noButton } = props;
@@ -22,7 +23,7 @@ function ClassCard(props: { class: Class; noButton: boolean | null }) {
       <CardHeader className="flex flex-col gap-4">
         <CardTitle>{cls.className}</CardTitle>
         <CardDescription>
-          {cls.date} - {cls.time}
+          {format(new Date(cls.date), "DD-MM-YYYY")} - {cls.time}
         </CardDescription>
         <Badge className="py-2 px-2 w-[fit-content] bg-red-200 text-black hover:bg-red-400 hover:scale-[1.1] transition-all">
           <Link href={`category/${cls.classGroup.toLowerCase()}`}>
