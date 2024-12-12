@@ -27,12 +27,14 @@ function NavMenu(props: NavMenuProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/account">Mi perfil</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link href="/reserves">Mis reservas</Link>
-        </DropdownMenuItem>
+        <div className="flex flex-col gap-2">
+          <DropdownMenuItem className="hover:bg-slate-200">
+            <Link href="/account">Mi perfil</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="hover:bg-slate-200">
+            <Link href="/reserves">Mis reservas</Link>
+          </DropdownMenuItem>
+        </div>
         <DropdownMenuItem>
           <LogoutButton />
         </DropdownMenuItem>

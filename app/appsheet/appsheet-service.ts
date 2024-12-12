@@ -82,6 +82,8 @@ export const updateTableRow = async (tableName: string, data: any) => {
     Rows: [data],
   };
 
+  console.log("Fetching with data", JSON.stringify(body));
+
   const fetchResponse = await fetch(url, {
     method: "POST",
     headers: {
