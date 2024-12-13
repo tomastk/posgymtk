@@ -9,16 +9,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { buttonVariants } from "@/components/ui/button";
 import LogoutButton from "./Logout";
-import { ArrowDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type NavMenuProps = {
-  phoneNumber: string;
-  userName: string;
-};
-
-function NavMenu(props: NavMenuProps) {
+function NavMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={buttonVariants({ size: "default" })}>

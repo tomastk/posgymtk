@@ -6,7 +6,13 @@ import ClassList from "../classes/ClassList";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-async function ReservesPage() {
+interface ReservesPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export const revalidate = 0;
+
+async function ReservesPage({ searchParams }: ReservesPageProps) {
   const cookieStore = await cookies();
   const authenticatedSession = cookieStore.get("authenticatedSession");
 
@@ -18,8 +24,15 @@ async function ReservesPage() {
 
   const userReserves = await getUserReserves(session.sessionUser);
 
+  const { message } = await searchParams;
+
   return (
     <div className="flex items-center flex-col gap-4 max-w-[80%] m-auto">
+      {message && (
+        <p className="text-center text-md p-2 bg-slate-950 text-white w-full shadow-sm">
+          {message}
+        </p>
+      )}
       <h1 className="text-center font-bold text-3xl">Tus reservas</h1>
       {userReserves.length === 0 && (
         <div className="flex flex-col gap-4 items-center">

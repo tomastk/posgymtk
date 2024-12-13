@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+
 import { addRow, loadTableData } from "../appsheet/appsheet-service";
 
 export type Reserver = {
@@ -24,5 +26,3 @@ export const createReserver = async (
   const response = await addRow("Reservers", createReserverData);
   return response.Rows[0];
 };
-
-export const updateReserver = (updateReserverData: UpdateReserverData) => {};

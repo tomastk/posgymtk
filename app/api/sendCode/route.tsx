@@ -5,7 +5,24 @@ import {
 } from "@/app/reserver/reserver-service";
 import { createSession } from "@/app/sessions/session-service";
 import { NextResponse } from "next/server";
-import { Twilio } from "twilio";
+
+const sendVerificationCode = async (phoneNumber: string, code: string) => {
+  const rawData = {
+    number: phoneNumber,
+    message: `Tu código de verificación para ingresar a Postgymtk es ${code}. No lo comparta con nadie. Gracias!`,
+  };
+
+  const response = await fetch(process.env.WW_SERVER_URL as string, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.BEARER_CODE}`,
+    },
+    body: JSON.stringify(rawData),
+  });
+
+  return await response.json();
+};
 
 export const POST = async (req: Request) => {
   const { phoneNumber } = (await req.json()) as { phoneNumber: string };
@@ -31,16 +48,7 @@ export const POST = async (req: Request) => {
 
   const { idSession } = await createSession(sessionData);
 
-  const twillioClient = new Twilio(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
-  );
-
-  await twillioClient.messages.create({
-    body: `Tu código de verificación para iniciar sesión en PosGymTk es ${code}.`,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: phoneNumber,
-  });
+  await sendVerificationCode(searchablePhoneNumber, code.toString());
 
   return NextResponse.json({ idSession, success: true });
 };

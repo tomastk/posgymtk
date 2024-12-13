@@ -1,8 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { getApiKey } from "../appsheet/appsheet-service";
 import { cookies } from "next/headers";
-import LogoutButton from "./Logout";
 import { Button } from "@/components/ui/button";
 import NavMenu from "./NavMenu";
 
@@ -19,7 +17,7 @@ async function Header() {
           </h2>
         </Link>
         <div>
-          <NavMenu phoneNumber={""} userName={""} />
+          <NavMenu />
         </div>
       </div>
     );

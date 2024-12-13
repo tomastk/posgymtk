@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { InputOTP, InputOTPSlot } from "@/components/ui/input-otp";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type ValidateCodeResponse = {
@@ -11,7 +10,6 @@ type ValidateCodeResponse = {
 function VerifyCode({ idSession }: { idSession: string }) {
   const [wrongCode, setWrongCode] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [userTypedCode, setUserTypedCode] = useState("");
 
   const verifyCode = async () => {

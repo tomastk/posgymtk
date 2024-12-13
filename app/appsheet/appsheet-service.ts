@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any*/
+
 export const getApiKey = () => {
   return process.env.APPSHEET_API_KEY;
 };
@@ -38,7 +40,6 @@ export const loadTableData = async (tableName: string): Promise<any> => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching products:", error);
     throw error;
   }
 };
@@ -65,7 +66,6 @@ export const addRow = async (tableName: string, data: any): Promise<any> => {
     const response = await fetchResponse.json();
     return response;
   } catch (error) {
-    console.error("Error adding row:", error);
     throw error;
   }
 };
@@ -81,8 +81,6 @@ export const updateTableRow = async (tableName: string, data: any) => {
     },
     Rows: [data],
   };
-
-  console.log("Fetching with data", JSON.stringify(body));
 
   const fetchResponse = await fetch(url, {
     method: "POST",

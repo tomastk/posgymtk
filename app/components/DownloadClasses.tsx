@@ -4,7 +4,7 @@ import { Download } from "lucide-react";
 import { Class } from "../classes/ClassList";
 import { Button } from "@/components/ui/button";
 
-function parseFromJSONToCsv(classes: Class[], p0: { type: string }) {
+function parseFromJSONToCsv(classes: Class[]) {
   const startLine =
     "idClass,className,maxMembers,date,time,classGroup,reservers,reserverParsed,classDescription\n";
 
@@ -23,7 +23,7 @@ function DownloadClasses({ classes }: { classes: Class[] }) {
     const confirm = window.confirm("¿Seguro que deseas descargar las clases?");
     if (!confirm) return;
 
-    const csvData = parseFromJSONToCsv(classes, { type: "text/csv" });
+    const csvData = parseFromJSONToCsv(classes);
 
     const blob = new Blob([csvData], {
       type: "text/csv",

@@ -19,7 +19,6 @@ export const createSession = async (
     const sessions = await addRow("Sessions", data);
     return sessions.Rows[0];
   } catch (error) {
-    console.error("Error creating session: ", error);
     throw error;
   }
 };

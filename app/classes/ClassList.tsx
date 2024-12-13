@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import ClassCard from "../components/ClassCard";
-import { getClasses } from "./classes-service";
-import { format, parse } from "@formkit/tempo";
+import { format } from "@formkit/tempo";
 import { es } from "date-fns/locale";
 import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
 
 export type Class = {
   idClass: string;
@@ -16,6 +16,7 @@ export type Class = {
   classGroup: string;
   reservers: string;
   reserverParsed: string[];
+  hasAvailableSpace: string;
   classDescription: string;
 };
 
@@ -26,18 +27,35 @@ function ClassList({
   classes: Class[];
   noButton: boolean;
 }) {
-  const mappedDates = classes.map((classe) => new Date(classe.date));
   const [classState, setClassState] = useState(classes);
-  const [date, setDate] = useState<Date | undefined>(mappedDates[0]);
+  const [searchedValue, setSearchedValue] = useState("");
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
-    if (date === undefined) return setClassState(classes);
+    if (!date && !searchedValue) {
+      setClassState(classes);
+      return;
+    }
+
     const filteredClasses = classes.filter((clase) => {
       const classDate = new Date(clase.date);
-      return format(date, "DD-MM-YYYY") === format(classDate, "DD-MM-YYYY");
+
+      const isSameDate =
+        date && format(date, "DD-MM-YYYY") === format(classDate, "DD-MM-YYYY");
+
+      const matchesSearch =
+        searchedValue &&
+        (clase.className.toLowerCase().includes(searchedValue.toLowerCase()) ||
+          clase.classDescription
+            .toLowerCase()
+            .includes(searchedValue.toLowerCase()));
+
+      // Check both conditions
+      return (!date || isSameDate) && (!searchedValue || matchesSearch);
     });
+
     setClassState(filteredClasses);
-  }, [date]);
+  }, [date, searchedValue, classes]);
 
   return (
     <>
@@ -47,6 +65,12 @@ function ClassList({
         selected={date}
         onSelect={setDate}
         className="rounded-md border"
+      />
+      <Input
+        className="w-[30%]"
+        placeholder="Buscar..."
+        value={searchedValue}
+        onChange={(e) => setSearchedValue(e.target.value)}
       />
       <section className="mt-4 flex gap-4 flex-wrap">
         {classState.map((cls) => (

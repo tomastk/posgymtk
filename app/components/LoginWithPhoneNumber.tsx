@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any*/
+
 "use client";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";

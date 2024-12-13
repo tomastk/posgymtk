@@ -1,14 +1,20 @@
-import { addRow, updateTableRow } from "../appsheet/appsheet-service";
+import {
+  addRow,
+  loadTableData,
+  updateTableRow,
+} from "../appsheet/appsheet-service";
 import { getClasses } from "../classes/classes-service";
 
 type ReserveData = {
   idClass: string;
   idReserver: string;
+  classTime: string;
+  reserveActive: "Y" | "N";
+  classDate: string;
 };
 
-export const createReserve = async (reserveData: ReserveData) => {
+export const createReserve = async (reserveData: Partial<ReserveData>) => {
   const addedReserve = await addRow("ClassesReserves", reserveData);
-  console.log(addedReserve);
 };
 
 export const cancelReserve = async (reserveData: ReserveData) => {
@@ -17,11 +23,20 @@ export const cancelReserve = async (reserveData: ReserveData) => {
     idClassReserve: reserveData.idClass + reserveData.idReserver,
     reserveActive: false,
   });
-  console.log(updatedRow);
   return updatedRow;
 };
 
 export const getUserReserves = async (userId: string) => {
   const classes = await getClasses();
   return classes.filter((clase) => clase.reserverParsed.includes(userId));
+};
+
+export const getRawUserReserves = async (
+  userId: string
+): Promise<ReserveData[]> => {
+  const allReserves = await loadTableData("ClassesReserves");
+  return allReserves.filter(
+    (reserve: ReserveData) =>
+      reserve.idReserver === userId && reserve.reserveActive === "Y"
+  );
 };

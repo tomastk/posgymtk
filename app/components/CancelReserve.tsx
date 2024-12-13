@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Loader from "./Loader";
-import { redirect } from "next/navigation";
 
 function CancelReserve(props: { idClass: string }) {
   const [success, setSuccess] = useState(false);
@@ -24,7 +23,7 @@ function CancelReserve(props: { idClass: string }) {
 
     if (res.success) {
       setSuccess(true);
-      redirect("/reserves");
+      window.location.href = "/reserves";
     }
 
     setLoading(false);

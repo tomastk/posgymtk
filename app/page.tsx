@@ -1,7 +1,8 @@
-import Image from "next/image";
 import ClassList from "./classes/ClassList";
 import { getClasses } from "./classes/classes-service";
 import DownloadClasses from "./components/DownloadClasses";
+
+export const revalidate = 0;
 
 export default async function Home() {
   const classes = await getClasses();

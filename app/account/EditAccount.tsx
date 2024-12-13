@@ -13,9 +13,6 @@ function EditAccount({ session }: { session: CreatedSession }) {
   const [success, setSuccess] = useState(false);
   const [userName, setUserName] = useState(session.sessionUserName);
   const [userEmail, setUserEmail] = useState(session.sessionUserEmail);
-  const [userPhoneNumber, setUserPhoneNumber] = useState(
-    session.userPhoneNumber
-  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,7 +56,7 @@ function EditAccount({ session }: { session: CreatedSession }) {
       <h2 className="text-center font-bold text-2xl mb-4">Editar mi Perfil</h2>
       <form
         className="flex flex-col gap-4 items-center"
-        onSubmit={handleSubmit as any}
+        onSubmit={handleSubmit}
       >
         <div className="grid w-full max-w-sm items-center gap-4">
           <Label htmlFor="email">Email*</Label>
@@ -97,7 +94,7 @@ function EditAccount({ session }: { session: CreatedSession }) {
             placeholder="Telefono"
             name="phone"
             className="cursor-not-allowed"
-            value={"+" + userPhoneNumber}
+            value={"+" + session.userPhoneNumber}
           />
         </div>
         <Button className="min-w-8 w-[fit-content]" disabled={loading}>
