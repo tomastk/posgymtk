@@ -14,7 +14,7 @@ type ReserveData = {
 };
 
 export const createReserve = async (reserveData: Partial<ReserveData>) => {
-  const addedReserve = await addRow("ClassesReserves", reserveData);
+  await addRow("ClassesReserves", reserveData);
 };
 
 export const cancelReserve = async (reserveData: ReserveData) => {

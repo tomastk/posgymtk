@@ -20,7 +20,8 @@ export const POST = async (req: Request) => {
   const data = await req.json();
   try {
     await cancelReserve({ ...data, idReserver: session.sessionUser });
-  } catch (error) {
+  } catch (e) {
+    console.error(e);
     return NextResponse.json({ success: false }, { status: 500 });
   }
   return NextResponse.json({ success: true });
